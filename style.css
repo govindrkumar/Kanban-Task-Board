@@ -58,6 +58,7 @@ color: #000000;
     color: rgb(145, 140, 140);
 }
 
+/* I am creating task-add system here...*/
 .task-add {
     display: flex;
     justify-content: center;
@@ -65,6 +66,10 @@ color: #000000;
     margin: 0 auto;
     max-width: 600px;
     margin-top: 20px;
+    background-color: beige;
+    border-radius: 5px;
+    flex-direction: column;
+    gap: 0;
 }
 
 
@@ -73,7 +78,9 @@ color: #000000;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    width: 100%;
+    width: 90%;
+    height: 90%;
+    padding: 10px;
 }
 
 #todo {
@@ -84,4 +91,44 @@ color: #000000;
     padding: 0 12px;
     border-radius: 8px;
     box-sizing: border-box;
+}
+
+.heading-taskboard h4{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 5px;
+    margin-right: 390px;
+}
+
+
+.task-score {
+    margin: 20px auto 0;
+    width: 100%;
+    max-width: 590px;
+    box-sizing: border-box;
+    background-color: beige;
+    padding: 10px;
+    border-radius: 9px;
+}
+
+.task-score h4 {
+    margin: 0 0 10px;
+}
+
+.score-items {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+.completed-task,
+.incomplete-task {
+    flex: 1;
+    min-width: 0;
+    border: 1px dashed saddlebrown;
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: center;
 }
