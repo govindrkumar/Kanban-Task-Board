@@ -13,6 +13,7 @@ nav ul {
     align-items: center;
     max-width: 650px;
     border-radius: 8px;
+    font-family: cursive;
 }
 
 nav ul li a {
@@ -36,11 +37,11 @@ color: #000000;
     color: white;
     max-width: 600px;
     margin: 0 auto;
-
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0;
+    font-family: cursive;
 }
 
 .heading h1 {
@@ -70,6 +71,7 @@ color: #000000;
     border-radius: 5px;
     flex-direction: column;
     gap: 0;
+    font-family: cursive;
 }
 
 
@@ -103,11 +105,12 @@ color: #000000;
 .task-score {
     margin: 20px auto 0;
     width: 100%;
-    max-width: 590px;
+    max-width: 600px;
     box-sizing: border-box;
     background-color: beige;
     padding: 10px;
     border-radius: 9px;
+    font-family: cursive;
 }
 
 .task-score h4 {
@@ -131,4 +134,27 @@ color: #000000;
     padding: 10px;
     box-sizing: border-box;
     text-align: center;
+}
+
+.main-board-score {
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
+    background-color: rgb(231, 172, 84);
+    font-family: cursive;
+    margin: 20px auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: fit-content;
+    border-radius: 2px;
+}
+
+.task-list {
+    width: 100%;
+    max-width: 550px;
+    box-sizing: border-box;
+    padding: 20px 20px 20px 20px;
+    border: 1px dashed black;
+    margin-bottom: 10px;
 }
