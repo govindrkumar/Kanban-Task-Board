@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Timer</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="timer.css">
+        <script src="scripts.js" defer></script>
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <li><a href="#">All Tasks</a></li>
+                <li><a href="timer.html">Timer</a></li>
+                <li><a href="#">Upcoming</a></li>
+                <li><a href="#">Completed</a></li>
+                <li><a href="#">Settings</a></li>
+            </ul>
+        </nav>
+
+        <div class="heading">
+            <h1>Welcome Mr. Lazy 😪 </h1>
+            <br>
+            <h4>You won't be completing task. Would you?</h4>
+            <br>
+            <h5>Do nothing. Be Proud!!</h5>
+        </div>
+
+        <main class = "timer-container">
+            <h1>Focus Zone ⏳</h1>
+            <p>One task at a time. No excuses.</p>
+
+            <div class = "timer-modes">
+                <button data-minutes="25">Focus</button>
+                <button data-minutes="5">Short Break</button>
+                <button data-minutes="15">Long Break</button>
+            </div>
+
+            <div id="timer-display"> 25:00</div>
+            <div class="timer-controls">
+                <button id="start-timer">Start</button>
+                <button id="pause-timer">Pause</button>
+                <button id="reset-timer">Reset</button>
+            </div>
+            <h3 id="timer-status">Ready to focus?</h3>
+        </main>
+    </body>
+</html>

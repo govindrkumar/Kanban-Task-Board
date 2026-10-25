@@ -1,149 +1,281 @@
-
 document.body.classList.add("dark-mode");
+
+const isTimerPage = document.getElementById("timer-display") !== null;
+const isTaskPage = document.getElementById("task-list") !== null;
 
 console.log("JavaScript Connected!");
 
-const todoInput = document.getElementById("todo");
-const taskList = document.getElementById("task-list");
-const addTaskButton = document.getElementById("add-task");
+// ==========================================
+// TASK BOARD CODE....we let you add 
+// ==========================================
 
-const savedData = localStorage.getItem("tasks");
-const tasks = savedData ? JSON.parse(savedData) : []; // to anyone...it's a shortcut to write if else in js. you can do that too....
+if (isTaskPage) {
+    const todoInput = document.getElementById("todo");
+    const taskList = document.getElementById("task-list");
+    const addTaskButton = document.getElementById("add-task");
+    const completedCounter = document.querySelector(".completed-task");
+    const incompleteCounter = document.querySelector(".incomplete-task");
+    const savedData = localStorage.getItem("tasks");
+    const tasks = savedData ? JSON.parse(savedData) : [];
 
-let i = tasks.reduce((maxId, task) => Math.max(maxId, task.id), 0);
+    let i = tasks.reduce(
+        (maxId, task) => Math.max(maxId, task.id),
+        0
+    );
 
-// need to write a stupid updatecounter.....
-function updateCounters(){
-    const completed = tasks.filter(function(task)
-    {
-        return task.completed === true;
-    }).length;
+    // Update completed and incomplete counters
+    function updateCounters() {
+        const completed = tasks.filter(function (task) {
+            return task.completed === true;
+        }).length;
 
-    const incomplete = tasks.length - completed;
+        const incomplete = tasks.length - completed;
 
-    completedCounter.textContent = "Completed : " + completed;
-    incompleteCounter.textContent = "Not Completed : " + incomplete;
-}
+        completedCounter.textContent =
+            "Completed : " + completed;
 
-// Display all tasks
-function renderTasks() {
-    taskList.innerHTML = "";
-    // normal h2...title...has been set with condition that if 
-    // any tasks.length === 0 then it will keep showing nothing here text
-    // useful feature 7/10
-
-    if (tasks.length === 0) {
-        const emptyMessage = document.createElement("h2");
-        emptyMessage.textContent = "Nothing here....";
-        taskList.appendChild(emptyMessage);
-        updateCounters();
-        return;
+        incompleteCounter.textContent =
+            "Not Completed : " + incomplete;
     }
 
-    // each task needs the row number which can be fetched too...
+    // Display all tasks
+    function renderTasks() {
+        taskList.innerHTML = "";
 
-    tasks.forEach(function(task, index) {
-        const taskRow = document.createElement("div");
-        taskRow.classList.add("task-row");
+        if (tasks.length === 0) {
+            const emptyMessage = document.createElement("h2");
+            emptyMessage.textContent = "Nothing here....";
+            taskList.appendChild(emptyMessage);
 
-        // Task number
-        // here, using span element instead of normal div element
-        // yeah, I needed little freedom from boriyat (bored)
-        // so, what it dowes ? we know that computer starts count from 0
-        // so, here we be appending index + 1 to know the task numbers....
-        const taskNumber = document.createElement("span");
-        taskNumber.textContent = (index + 1) + ".";
-        taskNumber.classList.add("task-number");
-
-        // Task title
-        // simple way to add task title which has been of course intered by you
-        const taskTitle = document.createElement("span");
-        taskTitle.textContent = task.title;
-        taskTitle.classList.add("task-title");
-
-        // Checkbox
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.checked = task.completed || false;
-        checkbox.classList.add("task-checkbox");
-
-        // Small condition
-        // if checkbox gets checked it marks completed in your local storage
-        // tells css to make a cross on text looks cool
-        // if its toggled to uncheck it will remove that cross. 
-        // yeah...
-        if (checkbox.checked) {
-            taskTitle.classList.add("completed");
+            updateCounters();
+            return;
         }
 
-        checkbox.addEventListener("change", function() {
-            task.completed = checkbox.checked;
+        tasks.forEach(function (task, index) {
+            const taskRow = document.createElement("div");
+            taskRow.classList.add("task-row");
 
-            localStorage.setItem("tasks", JSON.stringify(tasks));
+            // Task number
+            const taskNumber = document.createElement("span");
+            taskNumber.textContent = (index + 1) + ".";
+            taskNumber.classList.add("task-number");
 
-            taskTitle.classList.toggle(
-                "completed",
-                checkbox.checked
-            );
-        });
+            // Task title
+            const taskTitle = document.createElement("span");
+            taskTitle.textContent = task.title;
+            taskTitle.classList.add("task-title");
 
-        // delete button...useful ? yes....but, who completes task ?
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent = "🗑️";
-        deleteButton.classList.add("delete-button");
+            // Checkbox
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.checked = task.completed || false;
+            checkbox.classList.add("task-checkbox");
 
-        deleteButton.addEventListener("click", function (){
-            const taskIndex = tasks.findIndex(function(item){
-                return item.id === task.id;
-            });
+            if (checkbox.checked) {
+                taskTitle.classList.add("completed");
+            }
 
-            if (taskIndex !== -1){
-                tasks.splice(taskIndex, 1);
+            checkbox.addEventListener("change", function () {
+                task.completed = checkbox.checked;
 
                 localStorage.setItem(
                     "tasks",
                     JSON.stringify(tasks)
                 );
+
+                taskTitle.classList.toggle(
+                    "completed",
+                    checkbox.checked
+                );
+
+                updateCounters();
+            });
+
+            // Edit button
+            const editButton = document.createElement("button");
+            editButton.textContent = "✏️";
+            editButton.classList.add("edit-button");
+
+            editButton.addEventListener("click", function () {
+                const newTitle = prompt(
+                    "Edit your task:",
+                    task.title
+                );
+
+                if (newTitle === null) {
+                    return;
+                }
+
+                const cleanedTitle = newTitle.trim();
+
+                if (cleanedTitle === "") {
+                    return;
+                }
+
+                task.title = cleanedTitle;
+
+                localStorage.setItem(
+                    "tasks",
+                    JSON.stringify(tasks)
+                );
+
                 renderTasks();
-            }
+            });
+
+            // Delete button
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "🗑️";
+            deleteButton.classList.add("delete-button");
+
+            deleteButton.addEventListener("click", function () {
+                const taskIndex = tasks.findIndex(function (item) {
+                    return item.id === task.id;
+                });
+
+                if (taskIndex !== -1) {
+                    tasks.splice(taskIndex, 1);
+
+                    localStorage.setItem(
+                        "tasks",
+                        JSON.stringify(tasks)
+                    );
+
+                    renderTasks();
+                }
+            });
+
+            // Add elements to task row
+            taskRow.appendChild(taskNumber);
+            taskRow.appendChild(taskTitle);
+            taskRow.appendChild(checkbox);
+            taskRow.appendChild(editButton);
+            taskRow.appendChild(deleteButton);
+
+            taskList.appendChild(taskRow);
         });
 
-        taskRow.appendChild(taskNumber);
-        taskRow.appendChild(taskTitle);
-        taskRow.appendChild(checkbox);
-        taskList.appendChild(taskRow);
-        taskRow.appendChild(deleteButton);
-    });
-
-    updateCounters();
-}
-
-// Add a new task
-addTaskButton.addEventListener("click", function() {
-    const taskname = todoInput.value.trim();
-
-    if (taskname === "") {
-        return;
+        updateCounters();
     }
 
-    i++;
+    // Add a new task
+    addTaskButton.addEventListener("click", function () {
+        const taskname = todoInput.value.trim();
 
-    tasks.push({
-        id: i,
-        title: taskname,
-        completed: false
+        if (taskname === "") {
+            return;
+        }
+
+        i++;
+
+        tasks.push({
+            id: i,
+            title: taskname,
+            completed: false
+        });
+
+        localStorage.setItem(
+            "tasks",
+            JSON.stringify(tasks)
+        );
+
+        todoInput.value = "";
+        renderTasks();
     });
 
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-
-    todoInput.value = "";
-
+    // Display saved tasks on page load
     renderTasks();
-});
+}
 
-// Show saved tasks on page load
-renderTasks();
+// ==========================================
+// FOCUS TIMER CODE
+// ==========================================
 
-const completedCounter = document.querySelector(".completed-task");
-const incompleteCounter = document.querySelector(".incomplete-task");
+if (isTimerPage) {
+    const timerDisplay = document.getElementById("timer-display");
+    const startButton = document.getElementById("start-timer");
+    const pauseButton = document.getElementById("pause-timer");
+    const resetButton = document.getElementById("reset-timer");
+    const timerStatus = document.getElementById("timer-status");
+    const modeButtons = document.querySelectorAll("[data-minutes]");
 
+    let selectedMinutes = 25;
+    let remainingSeconds = selectedMinutes * 60;
+    let timerInterval = null;
+
+    // Update countdown display
+    function updateDisplay() {
+        const minutes = Math.floor(remainingSeconds / 60);
+        const seconds = remainingSeconds % 60;
+
+        timerDisplay.textContent =
+            String(minutes).padStart(2, "0") +
+            ":" +
+            String(seconds).padStart(2, "0");
+    }
+
+    // Stop the timer
+    function stopTimer() {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+
+    // Start the timer
+    function startTimer() {
+        if (timerInterval !== null) {
+            return;
+        }
+
+        if (remainingSeconds <= 0) {
+            timerStatus.textContent =
+                "Choose a timer mode to restart.";
+            return;
+        }
+
+        timerStatus.textContent =
+            "Stay focused. You got this! (It's prank!)";
+
+        timerInterval = setInterval(function () {
+            remainingSeconds--;
+
+            updateDisplay();
+
+            if (remainingSeconds <= 0) {
+                stopTimer();
+                timerStatus.textContent =
+                    "Session complete! Go to sleep! (See, if I care!)";
+            }
+        }, 1000);
+    }
+
+    // Reset the timer
+    function resetTimer() {
+        stopTimer();
+        remainingSeconds = selectedMinutes * 60;
+        updateDisplay();
+        timerStatus.textContent = "Timer reset. Ready to hide?";
+    }
+
+    // Start button
+    startButton.addEventListener("click", startTimer);
+
+    // Pause button
+    pauseButton.addEventListener("click", function () {
+        stopTimer();
+        timerStatus.textContent = "Timer paused... (Peekaboo!)";
+    });
+
+    // Reset button
+    resetButton.addEventListener("click", resetTimer);
+
+    // Focus, short break and long break modes
+    modeButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            selectedMinutes = Number(button.dataset.minutes);
+            resetTimer();
+            timerStatus.textContent = "Mode selected. Ready?";
+        });
+    });
+
+    // Initial display
+    updateDisplay();
+}
