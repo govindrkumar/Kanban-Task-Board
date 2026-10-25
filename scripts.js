@@ -1,53 +1,94 @@
+
 document.body.classList.add("dark-mode");
 
-// DOM elements
 console.log("JavaScript Connected!");
 
 const todoInput = document.getElementById("todo");
 const taskList = document.getElementById("task-list");
 const addTaskButton = document.getElementById("add-task");
 
-// Load existing tasks from LocalStorage
 const savedData = localStorage.getItem("tasks");
-
 const tasks = savedData ? JSON.parse(savedData) : [];
 
-// Set the ID counter based on existing tasks
 let i = tasks.reduce((maxId, task) => Math.max(maxId, task.id), 0);
 
-// Check loaded data
-console.log("Existing tasks:", tasks);
+// Display all tasks
+function renderTasks() {
+    taskList.innerHTML = "";
 
-// Add a new task when the button is clicked
-addTaskButton.addEventListener("click", function () {
-
-    // Read input
-    const taskname = todoInput.value.trim();
-
-    // Don't allow empty tasks
-    if (taskname === "") {
-        console.log("Please enter a task!");
+    if (tasks.length === 0) {
+        const emptyMessage = document.createElement("h2");
+        emptyMessage.textContent = "Nothing here....";
+        taskList.appendChild(emptyMessage);
         return;
     }
 
-    // Create and add a new task
+    tasks.forEach(function(task, index) {
+        const taskRow = document.createElement("div");
+        taskRow.classList.add("task-row");
+
+        // Task number
+        const taskNumber = document.createElement("span");
+        taskNumber.textContent = (index + 1) + ".";
+        taskNumber.classList.add("task-number");
+
+        // Task title
+        const taskTitle = document.createElement("span");
+        taskTitle.textContent = task.title;
+        taskTitle.classList.add("task-title");
+
+        // Checkbox
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = task.completed || false;
+        checkbox.classList.add("task-checkbox");
+
+        // Strike through completed tasks
+        if (checkbox.checked) {
+            taskTitle.classList.add("completed");
+        }
+
+        checkbox.addEventListener("change", function() {
+            task.completed = checkbox.checked;
+
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+
+            taskTitle.classList.toggle(
+                "completed",
+                checkbox.checked
+            );
+        });
+
+        taskRow.appendChild(taskNumber);
+        taskRow.appendChild(taskTitle);
+        taskRow.appendChild(checkbox);
+
+        taskList.appendChild(taskRow);
+    });
+}
+
+// Add a new task
+addTaskButton.addEventListener("click", function() {
+    const taskname = todoInput.value.trim();
+
+    if (taskname === "") {
+        return;
+    }
+
     i++;
 
     tasks.push({
         id: i,
-        title: taskname
+        title: taskname,
+        completed: false
     });
 
-    // Save updated array to LocalStorage
     localStorage.setItem("tasks", JSON.stringify(tasks));
 
-    // Show updated data in console
-    console.log("Updated tasks:", tasks);
-    console.log(
-        "Saved tasks:",
-        JSON.parse(localStorage.getItem("tasks"))
-    );
-
-    // Clear the input field
     todoInput.value = "";
+
+    renderTasks();
 });
+
+// Show saved tasks on page load
+renderTasks();

@@ -158,3 +158,33 @@ color: #000000;
     border: 1px dashed black;
     margin-bottom: 10px;
 }
+
+.task-row {
+    display: flex;
+    align-items : center;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.task-number {
+    min-width: 24px;
+    font-weight: bold;
+}
+
+.task-title {
+    flex: 1;
+    overflow-wrap: anywhere; /*basically tells browser that it can overflow even after breaking UI to save it's original view. */
+}
+
+.task-checkbox {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.task-title.completed {
+    text-decoration: line-through;
+    color: #777;
+}

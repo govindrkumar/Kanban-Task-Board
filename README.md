@@ -19,3 +19,10 @@ So, far... we have created the score-board list on second.
 
 ### What I creating : 
 A .json based file management system...We will need that....
+
+
+## Day 4
+- So, far we are working on adding a feature to update your work directly in browser.
+- for this, I have created a js function : `rendertasks();`
+- It basically creates a new div element on html and uses innerhtml function to inject the code into html. (yeah, your tasks basically.)
+- not cool....
