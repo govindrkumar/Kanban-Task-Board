@@ -18,7 +18,8 @@ It is a simple program built for two things :
 My personal motivation for creating this small website was to make my task easier. Literally if you want a pomodoro timer with a todo list, you need to install two separate app. Or, more often, they start showing you ads. I just wanted my custom timer and task app. This was the best, I could in small time frame.
 
 ## Photographs:
-
+![first image](quickshot_261117_045222.png)
+![second image](quickshot_261117_045208.png)
 
 # **Devlogs (small progress bar)**
 ## Day 1
