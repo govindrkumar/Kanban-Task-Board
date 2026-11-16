@@ -1,9 +1,26 @@
 # Kanban-Task-Board
-Simple task board (with html, css and js). 
+It is a simple program built for two things :
+- Set a Pomodore Clock
+- To-do list
 
-Nah, cut that crap!! I am Govind. I am creating a simple to-do app...like it should be created. No bullshit about productivity. Just the way you think (yeah I think too)!
+## Tech Stack:
+1. HTML5
+2. CSS (Vanilla)
+3. JavaScript 
+
+## Features:
+1. Helps you set up a small pomodoro timer. 
+2. Helps you write yoru task list.
+
+*Best part? It have local storage, so it can contain the info you added to it even after reloading.🤩🤩*
+
+## Personal motivation:
+My personal motivation for creating this small website was to make my task easier. Literally if you want a pomodoro timer with a todo list, you need to install two separate app. Or, more often, they start showing you ads. I just wanted my custom timer and task app. This was the best, I could in small time frame.
+
+## Photographs:
 
 
+# **Devlogs (small progress bar)**
 ## Day 1
 1. I created navbar. 
 2. Used Dark mode
@@ -34,4 +51,6 @@ A .json based file management system...We will need that....
 Check `License` Please!! (BSD-Clause 3 Revised)
 
 ## Contribution
-me only....
+All contributions are welcome if you adhere to keeping it ad free experience.
+
+Thanks for Reading! 

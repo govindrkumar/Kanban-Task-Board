@@ -50,6 +50,30 @@ if (isTaskPage) {
             updateCounters();
             return;
         }
+        const taskForm = document.querySelector(".task-add form");
+
+        taskForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const taskname = todoInput.value.trim();
+
+            if (taskname === "") {
+                return;
+            }
+
+            i++;
+
+            tasks.push({
+                id: i,
+                title: taskname,
+                completed: false
+            });
+
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+
+            todoInput.value = "";
+            renderTasks();
+        });
 
         tasks.forEach(function (task, index) {
             const taskRow = document.createElement("div");
